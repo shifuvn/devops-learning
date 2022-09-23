@@ -10,7 +10,7 @@ services:
       restart_policy:
         condition: on-failure
 
-    service_nodejs:
+  service_nodejs:
     image: connanaka/swarm-test:nodejs
     ports:
       - 8002:8002

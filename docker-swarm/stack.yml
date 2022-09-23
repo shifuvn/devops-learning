@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  service_php:
+    image: connanaka/swarm-test:php
+    ports:
+      - 8001:8001
+    deploy:
+      replicas: 5
+      restart_policy:
+        condition: on-failure
+
+    service_nodejs:
+    image: connanaka/swarm-test:nodejs
+    ports:
+      - 8002:8002
+    deploy:
+      replicas: 5
+      restart_policy:
+        condition: on-failure

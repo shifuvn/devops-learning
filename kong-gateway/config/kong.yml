@@ -1,0 +1,13 @@
+_format_version: "2.1"
+_transform: true
+
+services:
+  - host: www.google.com
+    name: example_service
+    port: 443
+    protocol: https
+    routes:
+      - name: example_route
+        paths:
+          - /mocks
+        strip_path: true

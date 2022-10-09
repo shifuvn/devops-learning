@@ -1,25 +1,29 @@
 version: '3.7'
 
 services:
-  mentee_service:
+  mentee-service:
+    container_name: mentee-service
     build:
       context: mentee
       dockerfile: Dockerfile
     ports:
-      - 8080:8080
+      - 9100:80
+      - 9101:443
 
-  mentor_service:
+  mentor-service:
+    container_name: mentor-service
     build:
       context: mentor
       dockerfile: Dockerfile
     ports:
-      - 8081:8081
-
-  nginx_gateway:
-    image: nginx
-    ports:
       - 9000:80
       - 9001:443
+
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - 8080:80
+      - 8443:443
     volumes:
       - ./nginx_config/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./nginx_config/cert:/var/www/cert
+      - ./nginx_config/cert:/var/www/cert:ro

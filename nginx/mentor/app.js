@@ -18,7 +18,7 @@ const certOption = {
  * Create server for app
  */
 const server = http.createServer(app);
-const serverSsl = https.createServer(certOption, app);
+const sslServer = https.createServer(certOption, app);
 
 /**
  * Define port
@@ -26,24 +26,57 @@ const serverSsl = https.createServer(certOption, app);
 const httpPort = 80;
 const httpsPort = 443;
 
-app.get("/", (req, res) => {
-	var ip = req.headers["x-forward-for"] || req.socket.remoteAddress;
-	console.log(`[GET] get all mentors from ${ip}`);
+const loggerRequest = (req, res) => {
+	const ip = req.headers["x-forward-for"] || req.socket.remoteAddress;
+	const route = req.originalUrl;
+	const method = req.method;
+
+	const statusCode = res ? res.statusCode.toString() : "";
+
+	console.log(
+		`${ip} -- [${new Date().toGMTString()}] "${method} ${route} ${statusCode}"`
+	);
+};
+
+app.get("/:name", (req, res) => {
 	res.status(200).json({
 		data: {
 			id: 1,
 			type: "mentor",
 			attributes: {
-				name: "Hung Provip"
+				name: req.params.name
 			}
 		}
 	});
+
+	loggerRequest(req, res);
+});
+
+app.post("/:name", (req, res) => {
+	res.status(200).json({
+		data: {
+			name: req.params.name,
+			status: "ok"
+		}
+	});
+	loggerRequest(req, res);
+});
+
+app.put("/:name/:age", (req, res) => {
+	res.status(200).json({
+		data: {
+			name: req.params.name,
+			age: req.params.age,
+			status: "ok"
+		}
+	});
+	loggerRequest(req, res);
 });
 
 server.listen(httpPort, () => {
 	console.log(`Mentor service is running on port ${httpPort}`);
 });
 
-serverSsl.listen(httpsPort, () => {
+sslServer.listen(httpsPort, () => {
 	console.log(`Mentor service is running on ssl port ${httpsPort}`);
 });

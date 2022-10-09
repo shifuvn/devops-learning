@@ -8,4 +8,4 @@ EXPOSE 80
 EXPOSE 443
 RUN chown -R node /usr/src/app
 USER node
-CMD ["node", "app.js"]
+CMD ["node", "index.js"]

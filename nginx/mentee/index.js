@@ -3,6 +3,8 @@ const http = require("http");
 const https = require("https");
 const fs = require("fs");
 
+const loggerRequest = require("logger-request-express");
+
 const app = express();
 
 /**
@@ -24,6 +26,8 @@ const serverSsl = https.createServer(certOption, app);
  */
 const httpPort = 80;
 const httpsPort = 443;
+
+app.all("*", loggerRequest);
 
 app.get("/", (req, res) => {
 	var ip = req.headers["x-forward-for"] || req.socket.remoteAddress;

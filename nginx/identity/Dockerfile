@@ -1,8 +1,9 @@
 FROM node:lts-alpine
 ENV NODE_ENV=production
 WORKDIR /usr/src/app
-COPY . .
+COPY ["package.json", "package-lock.json*", "./"]
 RUN npm install --production --silent && mv node_modules ../
+COPY . .
 EXPOSE 80
 EXPOSE 443
 RUN chown -R node /usr/src/app

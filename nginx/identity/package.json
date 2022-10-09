@@ -1,15 +1,16 @@
 {
-  "name": "mentee",
+  "name": "identity",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^8.5.1",
     "logger-request-express": "^1.1.0"
   }
 }

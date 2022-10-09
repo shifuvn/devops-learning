@@ -4,6 +4,8 @@ const http = require("http");
 const https = require("https");
 const fs = require("fs");
 
+const loggerRequest = require("logger-request-express");
+
 const app = express();
 
 /**
@@ -26,17 +28,7 @@ const sslServer = https.createServer(certOption, app);
 const httpPort = 80;
 const httpsPort = 443;
 
-const loggerRequest = (req, res) => {
-	const ip = req.headers["x-forward-for"] || req.socket.remoteAddress;
-	const route = req.originalUrl;
-	const method = req.method;
-
-	const statusCode = res ? res.statusCode.toString() : "";
-
-	console.log(
-		`${ip} -- [${new Date().toGMTString()}] "${method} ${route} ${statusCode}"`
-	);
-};
+app.all("*", loggerRequest);
 
 app.get("/:name", (req, res) => {
 	res.status(200).json({
@@ -48,18 +40,15 @@ app.get("/:name", (req, res) => {
 			}
 		}
 	});
-
-	loggerRequest(req, res);
 });
 
 app.post("/:name", (req, res) => {
-	res.status(200).json({
+	res.status(201).json({
 		data: {
 			name: req.params.name,
 			status: "ok"
 		}
 	});
-	loggerRequest(req, res);
 });
 
 app.put("/:name/:age", (req, res) => {
@@ -70,7 +59,6 @@ app.put("/:name/:age", (req, res) => {
 			status: "ok"
 		}
 	});
-	loggerRequest(req, res);
 });
 
 server.listen(httpPort, () => {

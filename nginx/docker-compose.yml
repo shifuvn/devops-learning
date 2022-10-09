@@ -19,6 +19,15 @@ services:
       - 9000:80
       - 9001:443
 
+  identity-service:
+    container_name: identity-service
+    build:
+      context: identity
+      dockerfile: Dockerfile
+    ports:
+      - 9200:80
+      - 9201:443
+
   nginx:
     image: nginx:stable-alpine
     ports:

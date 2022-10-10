@@ -94,8 +94,6 @@ services:
     image: pantsel/konga
     depends_on:
       - kong-database
-    links:
-      - kong-database
     command: "-c prepare -a postgres -u postgresql://kong:kong@kong-database:5432/konga_db"
     restart: on-failure
     networks:
@@ -108,7 +106,12 @@ services:
       - kong-database
     environment:
       - DB_ADAPTER=postgres
-      - DB_URI=postgresql://kong:kong@kong-database:5432/konga_db
+      - DB_HOST=kong-database
+      - DB_PORT=5432
+      - DB_DATABASE=konga_db
+      - DB_USER=kong
+      - DB_PASSWORD=kong
+      - NODE_ENV=development
     restart: on-failure
     ports:
       - 1337:1337

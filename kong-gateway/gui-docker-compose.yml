@@ -6,6 +6,7 @@ networks:
 
 volumes:
   kong_data:
+  konga_data:
 
 
 services:
@@ -117,3 +118,5 @@ services:
       - 1337:1337
     networks:
       - kong-demo
+    volumes:
+      - konga_data:/var/lib/postgresql/data

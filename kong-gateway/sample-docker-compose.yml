@@ -1,8 +1,25 @@
 version: '3.8'
 
 services:
+  sample-service:
+    image: connanaka/api-sample-service:nodejs
+    container_name: sample-service
+    ports:
+      - 9001:80
+    networks:
+      - demo-kong-gateway
+
+  sample-identity-service:
+    image: connanaka/api-sample-identity-service:nodejs
+    container_name: sample-identity-service
+    ports:
+      - 9000:80
+    networks:
+      - demo-kong-gateway
+
   kong:
     image: kong:alpine
+    container_name: kong-gateway
     volumes:
       - "./config:/usr/local/kong/declarative"
     environment:
@@ -18,3 +35,8 @@ services:
       - "127.0.0.1:8001:8001"
       - "8443:8443"
       - "127.0.0.1:8444:8444"
+    networks:
+      - demo-kong-gateway
+
+networks:
+  demo-kong-gateway:

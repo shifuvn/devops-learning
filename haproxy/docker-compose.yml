@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+
+  api-sample-service:
+    container_name: haproxy-api-sample-service
+    image: connanaka/api-sample-service:nodejs
+    ports:
+      - 8080:80
+    restart: always
+    networks:
+      - haproxy-demo
+
+  gateway:
+    image: haproxy:alpine
+    container_name: haproxy-gateway
+    restart: always
+    ports:
+      - 9000:80
+    volumes:
+      - ./config/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    networks:
+      - haproxy-demo
+
+networks:
+  haproxy-demo:

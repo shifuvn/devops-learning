@@ -100,7 +100,6 @@ services:
   # Api service
   sample-service:
     image: connanaka/api-sample-service:nodejs
-    container_name: sample-service
     ports:
       - 9000:80
     networks:
@@ -108,7 +107,6 @@ services:
 
   sample-identity-service:
     image: connanaka/api-sample-identity-service:nodejs
-    container_name: sample-identity-service
     ports:
       - 9001:80
     networks:

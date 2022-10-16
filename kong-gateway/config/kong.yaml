@@ -7,10 +7,25 @@ services:
     port: 80
     protocol: http
     routes:
-      - name: path_mocks
+      - name: PATH_GET_mocks
+        methods:
+          - GET
         paths:
           - /mocks
+        plugins:
+          - name: jwt
+            enabled: true
+            config:
+              key_claim_name: kid
+              claims_to_verify:
+                - exp
         strip_path: true
+      - name: PATH_POST_PUT_mocks
+        methods:
+          - POST
+          - PUT
+        paths:
+          - /mocks
 
   - host: sample-identity-service
     name: sample_identity_api_service
@@ -22,26 +37,21 @@ services:
           - /identity
         strip_path: true
 
-plugins:
-  - name: jwt
-    service: sample_identity_api_service
-    enabled: true
-    config:
-      key_claim_name: kid
-      claims_to_verify:
-        - exp
-  - name: jwt
-    service: sample_api_service
-    enabled: true
-    config:
-      key_claim_name: kid
-      claims_to_verify:
-        - exp
+#plugins:
+#  - name: jwt
+#    service: sample_identity_api_service
+#    enabled: true
+#    config:
+#      key_claim_name: kid
+#      claims_to_verify:
+#        - exp
 
+# Consumers
 consumers:
   - username: login_identity_issuer
     custom_id: login_identity_issuer
 
+# Config plugins
 jwt_secrets:
   - consumer: login_identity_issuer
     secret: "Evvwju8QwXGOeACgCD65U4i0X2q8qL++/I1zso3wDnc="

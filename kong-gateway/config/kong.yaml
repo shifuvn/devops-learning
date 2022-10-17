@@ -8,6 +8,9 @@ services:
     protocol: http
     routes:
       - name: PATH_GET_mocks
+        protocols:
+          - http
+          - https
         methods:
           - GET
         paths:
@@ -21,6 +24,9 @@ services:
                 - exp
         strip_path: true
       - name: PATH_POST_PUT_mocks
+        protocols:
+          - http
+          - https
         methods:
           - POST
           - PUT
@@ -33,11 +39,20 @@ services:
     protocol: http
     routes:
       - name: path_identity
+        protocols:
+          - http
+          - https
         paths:
           - /identity
         strip_path: true
 
-#plugins:
+plugins:
+  - name: acme
+    config:
+      account_email: hungntsol77@gmail.com
+      domains:
+        - "*.localhost"
+        - "*.host.docker.internal"
 #  - name: jwt
 #    service: sample_identity_api_service
 #    enabled: true

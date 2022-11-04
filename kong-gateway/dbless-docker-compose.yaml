@@ -2,15 +2,15 @@ version: '3.8'
 
 services:
   sample-service:
-    image: connanaka/api-sample-service:nodejs
+    image: solcr/sample-api:nodejs
     container_name: sample-service
     ports:
       - 9000:80
     networks:
       - demo-kong-gateway
 
-  sample-identity-service:
-    image: connanaka/api-sample-identity-service:nodejs
+  sample-secret-service:
+    image: solcr/sample-api-secret:nodejs
     container_name: sample-identity-service
     ports:
       - 9001:80

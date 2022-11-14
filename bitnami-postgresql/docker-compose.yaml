@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  master-db:
+    image: bitnami/postgresql:12
+    ports:
+      - 5433:5432
+    volumes:
+      - master_data:/bitnami/postgresql
+    environment:
+      - POSTGRESQL_REPLICATION_MODE=master
+      - POSTGRESQL_REPLICATION_USER=demo_repl
+      - POSTGRESQL_REPLICATION_PASSWORD=123qwe_repl
+      - POSTGRESQL_USERNAME=postgres
+      - POSTGRESQL_PASSWORD=123qwe
+      - POSTGRESQL_DATABASE=emp
+      - ALLOW_EMPTY_PASSWORD=yes
+
+  slave-db:
+    image: bitnami/postgresql:12
+    ports:
+      - 5432
+    depends_on:
+      - master-db
+    environment:
+      - POSTGRESQL_REPLICATION_MODE=slave
+      - POSTGRESQL_REPLICATION_USER=demo_repl
+      - POSTGRESQL_REPLICATION_PASSWORD=123qwe_repl
+      - POSTGRESQL_MASTER_HOST=master-db
+      - POSTGRESQL_MASTER_PORT_NUMBER=5432
+      - ALLOW_EMPTY_PASSWORD=yes
+
+networks:
+  demo-postgresql-replica:
+
+
+volumes:
+  master_data:

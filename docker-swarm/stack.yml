@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   service1:
-    image: connanaka/swarm-test:php
+    image: solcr/swarm-test:php
     ports:
       - 8001:8001
     deploy:
@@ -11,7 +11,7 @@ services:
         condition: on-failure
 
   service2:
-    image: connanaka/swarm-test:nodejs
+    image: solcr/swarm-test:nodejs
     ports:
       - 8002:8022
     deploy:

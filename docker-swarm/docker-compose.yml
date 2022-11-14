@@ -2,15 +2,15 @@ version: '3,8'
 
 services:
   nodejs-app:
-    container_name: connanaka/swarm-test:nodejs
+    container_name: solcr/swarm-test:nodejs
     build:
       context: ./node
       dockerfile: Dockerfile
-    image: connanaka/swarm-test:nodejs
+    image: solcr/swarm-test:nodejs
 
   php-app:
-    container_name: connanaka/swarm-test:php
+    container_name: solcr/swarm-test:php
     build:
       context: ./php
       dockerfile: Dockerfile
-    image: connanaka/swarm-test:php
+    image: solcr/swarm-test:php

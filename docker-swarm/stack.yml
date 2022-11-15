@@ -13,7 +13,7 @@ services:
   service2:
     image: solcr/swarm-test:nodejs
     ports:
-      - 8002:8022
+      - 8002:8002
     deploy:
       replicas: 5
       restart_policy:

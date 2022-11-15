@@ -5,8 +5,6 @@ services:
     image: bitnami/postgresql:12
     ports:
       - 5432:5432
-    networks:
-      - demo-postgresql-replica
     environment:
       - POSTGRESQL_REPLICATION_MODE=master
       - POSTGRESQL_REPLICATION_USER=demo_repl
@@ -24,24 +22,17 @@ services:
     image: bitnami/postgresql:12
     ports:
       - 5432
-    networks:
-      - demo-postgresql_replica
-    depends_on:
-      - master-db
     environment:
       - POSTGRESQL_REPLICATION_MODE=slave
       - POSTGRESQL_REPLICATION_USER=demo_repl
       - POSTGRESQL_REPLICATION_PASSWORD=123qwe_repl
-      - POSTGRESQL_MASTER_HOST=master-db
+      - POSTGRESQL_MASTER_HOST=pgs_master
       - POSTGRESQL_MASTER_PORT_NUMBER=5432
       - ALLOW_EMPTY_PASSWORD=yes
     deploy:
       replicas: 2
       restart_policy:
         condition: on-failure
-
-networks:
-  demo-postgresql-replica:
 
 volumes:
   master_data:

@@ -4,7 +4,7 @@ services:
   pgs_master:
     image: bitnami/postgresql:12
     ports:
-      - 5432:5432
+      - "5432:5432"
     environment:
       - POSTGRESQL_REPLICATION_MODE=master
       - POSTGRESQL_REPLICATION_USER=demo_repl
@@ -21,7 +21,7 @@ services:
   pgs_slave:
     image: bitnami/postgresql:12
     ports:
-      - 5432
+      - "5433:5432"
     environment:
       - POSTGRESQL_REPLICATION_MODE=slave
       - POSTGRESQL_REPLICATION_USER=demo_repl

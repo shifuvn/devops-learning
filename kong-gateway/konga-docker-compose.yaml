@@ -20,7 +20,7 @@ services:
     volumes:
       - kong_data:/var/lib/postgresql/data
     networks:
-      - kong-demo
+      - kong-demo-nw
 
   # kong migration
   kong-migration:
@@ -36,7 +36,7 @@ services:
       - KONG_PG_PASSWORD=kong
     restart: on-failure
     networks:
-      - kong-demo
+      - kong-demo-nw
 
   # kong gateway
   kong-gateway:
@@ -69,7 +69,7 @@ services:
       retries: 5
       start_period: 30s
     networks:
-      - kong-demo
+      - kong-demo-nw
 
   # kong database prepare
   konga-prepare:
@@ -79,7 +79,7 @@ services:
     command: "-c prepare -a postgres -u postgresql://kong:kong@kong-database:5432/konga_db"
     restart: on-failure
     networks:
-      - kong-demo
+      - kong-demo-nw
 
   # konga gui
   konga:
@@ -93,27 +93,27 @@ services:
     ports:
       - 1337:1337
     networks:
-      - kong-demo
+      - kong-demo-nw
     volumes:
       - konga_data:/var/lib/postgresql/data
 
   # Api service
   sample-service:
-    image: connanaka/api-sample-service:nodejs
+    image: solcr/sample-api:nodejs
     ports:
       - 9000:80
     networks:
-      - kong-demo
+      - kong-demo-nw
 
   sample-identity-service:
-    image: connanaka/api-sample-identity-service:nodejs
+    image: solcr/sample-api-secret:nodejs
     ports:
       - 9001:80
     networks:
-      - kong-demo
+      - kong-demo-nw
 
 networks:
-  kong-demo:
+  kong-demo-nw:
 
 
 volumes:

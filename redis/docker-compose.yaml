@@ -1,0 +1,26 @@
+version: '3.8'
+
+networks:
+  redis_nw:
+
+
+services:
+  redis0:
+    image: solcr/my-redis:1.0
+    networks:
+      - redis_nw
+    ports:
+      - "6379:6379"
+    restart: always
+
+  redis1:
+    image: solcr/my-redis:1.0
+    networks:
+      - redis_nw
+    restart: always
+
+  redis2:
+    image: solcr/my-redis:1.0
+    networks:
+      - redis_nw
+    restart: always
